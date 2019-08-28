@@ -18,14 +18,14 @@
     <body>
         <div class="dialog">
             <main> <h6> BEIBE - Beauty Embuste Indústria de Beleza e Estética </h6><br>
-                <form action="efetuarLogin" method="post" modelAttribute="user">
+                <form action="LoginServlet" method="post" modelAttribute="user">
                     <div class="form-group">
                         <label path="email">E-mail</form:label>
-                            <input type="text" path="email" class="block"/>
+                            <input type="email" name="email" class="block" required="true"/>
                     </div>
                     <div class="form-group">
                         <label path="senha">Senha </form:label>
-                            <input type="password" path="senha" class="block"/>
+                            <input type="password" name="senha" class="block" required="true"/>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-success btn-block">Login</button>

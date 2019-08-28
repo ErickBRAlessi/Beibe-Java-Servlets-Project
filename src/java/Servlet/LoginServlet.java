@@ -1,24 +1,27 @@
-package Servlet;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Servlet;
+
+import Model.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Erick Alessi
  */
-@WebServlet(urlPatterns = {"/Invalidar"})
-public class Invalidar extends HttpServlet {
+@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
+public class LoginServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,20 +35,29 @@ public class Invalidar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String email = "";
+        String senha = "";
+        email = request.getParameter("email");
+        senha = request.getParameter("senha");
+        HttpSession s = request.getSession();
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Invalidar</title>");
+            out.println("<title>Servlet LoginServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            if (request.getSession() != null) {
-                out.println("<h1>Logout Realizado com Sucesso</h1>");
-                request.getSession().invalidate();
-                out.println("<a href=\'index.jsp'>Fazer Login Novamente</a>");
-            }else{
-                out.println("FUDEU");
+            if (!email.equals(senha)) {
+                out.println("<h1>Usuario " + email + " logado </h1>");
+                s.setAttribute("user", email);
+                s.setAttribute("listaUsuarios", new ArrayList<Usuario>());
+                out.println("<a href=\'PortalServlet'>Acessar Portal</a>");
+            }
+            if (email.equals(senha)){
+                out.println("Usuário ou Senha Inválida");
+                out.println("<a href=\'index.jsp'>Fazer Login</a>");
+
             }
             out.println("</body>");
             out.println("</html>");
